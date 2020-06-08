@@ -253,7 +253,7 @@ HRESULT GenerateWorkingDir()
         if (SUCCEEDED(hr))
         {
             hr =
-                AppendStringToString(path, L"\\transfer_xp", &pAppWorkingPath) ? S_OK : E_FAIL;
+                AppendStringToString(path, L"\\Transfer 121", &pAppWorkingPath) ? S_OK : E_FAIL;
 
             if (SUCCEEDED(hr))
             {
