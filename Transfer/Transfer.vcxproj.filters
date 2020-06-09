@@ -42,9 +42,6 @@
     <ClInclude Include="FileNPathOp.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ApplicationData.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="iBox.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>

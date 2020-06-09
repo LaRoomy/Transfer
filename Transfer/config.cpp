@@ -730,7 +730,7 @@ void ConfigProperty::onSendData()
 
 		this->serialComm->SetTransmissionEventProtocolHandler(dynamic_cast<ITransmissionReportProtocol*>(this));
 
-		auto hr = this->serialComm->InitDataTransmission(SEND_BUFFER, this->currentLoadedFileBuffer.GetData());
+		auto hr = this->serialComm->InitDataTransmission(MODE_SEND, this->currentLoadedFileBuffer.GetData());
 		if (SUCCEEDED(hr))
 		{
 			// ...
@@ -755,7 +755,7 @@ void ConfigProperty::onReceiveData()
 
 		this->serialComm->SetTransmissionEventProtocolHandler(dynamic_cast<ITransmissionReportProtocol*>(this));
 
-		auto hr = this->serialComm->InitDataTransmission(RECEIVE_BUFFER, nullptr);
+		auto hr = this->serialComm->InitDataTransmission(MODE_RECEIVE, nullptr);
 		if (SUCCEEDED(hr))
 		{
 			// ...

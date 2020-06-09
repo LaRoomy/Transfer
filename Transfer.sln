@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transfer_xp", "Transfer_xp\Transfer_xp.vcxproj", "{C8ED2E6B-0383-44EA-8692-568B73E56049}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transfer", "Transfer\Transfer.vcxproj", "{C8ED2E6B-0383-44EA-8692-568B73E56049}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
