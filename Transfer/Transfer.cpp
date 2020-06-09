@@ -46,25 +46,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             mRegisterClass(hInstance);
 
             // Anwendungsinitialisierung ausführen:
-            if (!InitInstance(hInstance, nCmdShow, cProperty))
+            if (InitInstance(hInstance, nCmdShow, cProperty))
             {
-                return FALSE;
-            }
-            else
-            {
-                // ...
-            }
+                HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TRANSFERXP));
 
-            HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TRANSFERXP));
-
-
-            // Hauptnachrichtenschleife:
-            while (GetMessage(&msg, nullptr, 0, 0))
-            {
-                if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                // Hauptnachrichtenschleife:
+                while (GetMessage(&msg, nullptr, 0, 0))
                 {
-                    TranslateMessage(&msg);
-                    DispatchMessage(&msg);
+                    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                    {
+                        TranslateMessage(&msg);
+                        DispatchMessage(&msg);
+                    }
                 }
             }
         }
@@ -74,8 +67,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     return (int) msg.wParam;
 }
-
-
 
 //
 //  FUNKTION: MyRegisterClass()
