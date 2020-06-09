@@ -849,13 +849,13 @@ void ConfigProperty::onTransmissionStart(int mode)
 {
 	this->currentTransmissionMode = mode;
 
-	if (mode == SEND_)
+	if (mode == MODE_SEND)
 	{
 		iString txt(L"Abbrechen");
 		this->sendButton->setAppearance_IconText(IDI_CANCEL, 48, txt);
 		this->sendButton->Update();
 	}
-	else if (mode == RECEIVE_)
+	else if (mode == MODE_RECEIVE)
 	{
 		iString txt(L"Abbrechen");
 		this->receiveButton->setAppearance_IconText(IDI_CANCEL, 48, txt);
@@ -868,9 +868,9 @@ void ConfigProperty::transmissionProgress(int currentProgress, int fullDataSize)
 	UNREFERENCED_PARAMETER(fullDataSize);
 
 	iString txtDsp(L"Aktiv: ");
-	if (this->currentTransmissionMode == SEND_)
+	if (this->currentTransmissionMode == MODE_SEND)
 		txtDsp += L"Senden ";
-	else if (this->currentTransmissionMode == RECEIVE_)
+	else if (this->currentTransmissionMode == MODE_RECEIVE)
 		txtDsp += L"Empfangen ";
 
 	txtDsp += currentProgress;
@@ -881,7 +881,7 @@ void ConfigProperty::transmissionProgress(int currentProgress, int fullDataSize)
 
 void ConfigProperty::onTransmissionComplete(LPCTSTR data)
 {
-	if (this->currentTransmissionMode == RECEIVE_)
+	if (this->currentTransmissionMode == MODE_RECEIVE)
 	{
 		if (data != nullptr)
 		{
@@ -902,7 +902,7 @@ void ConfigProperty::onTransmissionComplete(LPCTSTR data)
 
 void ConfigProperty::onTransmissionInterrupt(LPCTSTR data)
 {
-	if (this->currentTransmissionMode == RECEIVE_)
+	if (this->currentTransmissionMode == MODE_RECEIVE)
 	{
 		if (data != nullptr)
 		{

@@ -24,9 +24,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Transfer_xp.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="config.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -75,11 +72,11 @@
     <ClInclude Include="CommonControls\textField.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Transfer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Transfer_xp.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="config.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -110,19 +107,11 @@
     <ClCompile Include="CommonControls\textField.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Transfer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Transfer_xp.rc">
-      <Filter>Ressourcendateien</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
-    <Image Include="Transfer_xp.ico">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
     <Image Include="res\receive.ico">
       <Filter>Ressourcendateien</Filter>
     </Image>
@@ -132,5 +121,16 @@
     <Image Include="res\cancel.ico">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="transfer_img_main.ico">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="transfer_img_small.ico">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Transfer.rc">
+      <Filter>Ressourcendateien</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -7,10 +7,10 @@
 #include <cListView.h>
 #include <CustomButton.h>
 
-#define		SEND_					1240
-#define		RECEIVE_				1241
-#define		SEND_BUFFER				1242
-#define		RECEIVE_BUFFER			1243
+#define		MODE_SEND				1240
+#define		MODE_RECEIVE			1241
+//#define		SEND_BUFFER				1242
+//#define		RECEIVE_BUFFER			1243
 #define		TERMINATE				1252
 #define		INTERRUPT_TRANSMISSION	1253
 #define		TRANSMISSION_COMPLETE	1254
@@ -127,7 +127,7 @@ public:
 	SerialComm(HWND Parent, LPCTSTR Root_Directory);	// the custom constructor must be used for the data transmission
 	~SerialComm();
 
-	HRESULT InitDataTransmission(int Mode, LPCTSTR directBuffer);
+	HRESULT InitDataTransmission(int Mode, LPCTSTR dataOut);	//dataOut is only used if the Mode == SEND
 
 	void CancelTransmission();
 	void TerminateTransmission();

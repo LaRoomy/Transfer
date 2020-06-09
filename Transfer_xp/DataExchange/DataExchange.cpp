@@ -185,11 +185,11 @@ void SerialComm::setDefault(void)
 	this->Configuration->WT_Timeout_mpl = UNDEF;
 }
 
-HRESULT SerialComm::InitDataTransmission( int Mode, LPCTSTR directBuffer)
+HRESULT SerialComm::InitDataTransmission(int Mode, LPCTSTR dataOut)
 {
-	if(Mode == SEND_BUFFER)
+	if(Mode == MODE_SEND)
 	{
-		if(directBuffer == nullptr)
+		if(dataOut == nullptr)
 		{
 			return E_FAIL;
 		}
@@ -198,7 +198,7 @@ HRESULT SerialComm::InitDataTransmission( int Mode, LPCTSTR directBuffer)
 			size_t len;
 			HRESULT hr;
 
-			hr = StringCbLength(directBuffer, sizeof( TCHAR )* STRSAFE_MAX_CCH, &len);
+			hr = StringCbLength(dataOut, sizeof( TCHAR )* STRSAFE_MAX_CCH, &len);
 			if( SUCCEEDED( hr ))
 			{
 				this->IO_Info.totalDataSize = (int)(len / sizeof(TCHAR));
@@ -208,10 +208,10 @@ HRESULT SerialComm::InitDataTransmission( int Mode, LPCTSTR directBuffer)
 
 				if(this->IOBuffer != nullptr)
 				{
-					hr = StringCbCopy(this->IOBuffer, (len + ( 10* sizeof( WCHAR ))), directBuffer);
+					hr = StringCbCopy(this->IOBuffer, (len + ( 10* sizeof( WCHAR ))), dataOut);
 					if( SUCCEEDED( hr ))
 					{
-						hr = StringCbCat(this->IOBuffer, (len + ( 10 * sizeof( WCHAR ))), L"\n \n\0");	// what was the purpose of that ?!
+						hr = StringCbCat(this->IOBuffer, (len + ( 10 * sizeof( WCHAR ))), L"\n \n\0");	// *add two empty lines to make sure the whole data will be resolved by the machine
 						if( FAILED( hr ))
 						{
 							return hr;
@@ -227,14 +227,11 @@ HRESULT SerialComm::InitDataTransmission( int Mode, LPCTSTR directBuffer)
 				return E_FAIL;
 
 		}
-		Mode = SEND_;
 	}
-	else if( Mode == RECEIVE_BUFFER )
+	else if(Mode == MODE_RECEIVE)
 	{
 		this->IO_Info.processedDataSize = 0;
 		this->IO_Info.totalDataSize = -1;// size unknown on receive-mode
-
-		Mode = RECEIVE_;
 	}
 	else
 		return E_FAIL;
@@ -733,14 +730,14 @@ DWORD WINAPI SerialComm::TransmissionProc( LPVOID lParam )
 
 											SetCommMask(hFile, EV_RXCHAR);
 
-											if (Mode == SEND_)
+											if (Mode == MODE_SEND)
 											{
 												if (!_this_->outputProcess(hFile, &ovl))
 												{
 													// send error
 												}
 											}
-											else if (Mode == RECEIVE_)
+											else if (Mode == MODE_RECEIVE)
 											{
 												if (!_this_->inputProcess(hFile, &ovl))
 												{
@@ -1064,14 +1061,14 @@ void SerialComm::OnInterrupt(int Mode)
 	}
 	else if(this->threadInterruptCtrl == INTERRUPT_TRANSMISSION)
 	{
-		if(Mode == RECEIVE_)
+		if(Mode == MODE_RECEIVE)
 		{
 			if (this->transmissionReport != nullptr)
 			{
 				this->transmissionReport->onTransmissionInterrupt(this->IOBuffer);
 			}			
 		}
-		else if (Mode == SEND_)
+		else if (Mode == MODE_SEND)
 		{
 			if (this->transmissionReport != nullptr)
 			{

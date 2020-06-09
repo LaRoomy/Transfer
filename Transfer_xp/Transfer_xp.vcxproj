@@ -24,6 +24,7 @@
     <ProjectGuid>{c8ed2e6b-0383-44ea-8692-568b73e56049}</ProjectGuid>
     <RootNamespace>Transferxp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Transfer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -163,7 +164,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SafeRelease.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Transfer_xp.h" />
+    <ClInclude Include="Transfer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommonControls\cListView.cpp" />
@@ -178,17 +179,17 @@
     </ClCompile>
     <ClCompile Include="FileNPathOp.cpp" />
     <ClCompile Include="HelperF.cpp" />
-    <ClCompile Include="Transfer_xp.cpp" />
+    <ClCompile Include="Transfer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Transfer_xp.rc" />
+    <ResourceCompile Include="Transfer.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\cancel.ico" />
     <Image Include="res\receive.ico" />
     <Image Include="res\send.ico" />
-    <Image Include="small.ico" />
-    <Image Include="Transfer_xp.ico" />
+    <Image Include="transfer_img_main.ico" />
+    <Image Include="transfer_img_small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

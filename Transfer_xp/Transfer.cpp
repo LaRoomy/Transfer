@@ -2,7 +2,7 @@
 //
 
 #include "framework.h"
-#include "Transfer_xp.h"
+#include "Transfer.h"
 #include "config.h"
 
 #define MAX_LOADSTRING 100

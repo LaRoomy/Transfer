@@ -44,7 +44,7 @@
 #include <memory.h>
 
 #include "cObject.h"
-#include "Transfer_xp.h"
+#include "Transfer.h"
 #include "Colors.h"
 #include "BasicFPO.h"
 #include "HelperF.h"
