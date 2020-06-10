@@ -24,7 +24,9 @@ public:
 	virtual BOOL SaveBufferToFileAsUtf8(LPCTSTR buffer, LPCTSTR path) = 0;
 	// use this method for retrieving permanent storage data
 	virtual BOOL LoadBufferFmFileAsUtf8(TCHAR** buffer, LPCTSTR path) = 0;
+#ifndef COMPILE_FOR_WIN_XP
 	virtual BOOL GetKnownFolderPath(TCHAR** path, REFKNOWNFOLDERID ID) = 0;
+#endif // !COMPILE_FOR_WIN_XP
 	virtual BOOL RemoveFilenameFromPath(_Inout_ LPTSTR path) = 0;
 	virtual BOOL RemoveFilenameFromPath(_In_ LPCTSTR path,_Outptr_ TCHAR** newPath_out) = 0;
 	virtual BOOL GetFilenameOutOfPath(LPCTSTR path, TCHAR** filename_out, BOOL hideFileExt) = 0;

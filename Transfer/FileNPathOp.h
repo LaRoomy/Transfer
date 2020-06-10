@@ -14,7 +14,9 @@ public:
 	 BOOL LoadBufferFmFile(TCHAR** buffer, LPCTSTR path) { return this->pLoadBuffer(buffer, path, CP_ACP); }
 	 BOOL SaveBufferToFileAsUtf8(LPCTSTR buffer, LPCTSTR path){ return this->pSaveBuffer(buffer, path, CP_UTF8); }
 	 BOOL LoadBufferFmFileAsUtf8(TCHAR** buffer, LPCTSTR path){ return this->pLoadBuffer(buffer, path, CP_UTF8); }
+#ifndef COMPILE_FOR_WIN_XP
 	 BOOL GetKnownFolderPath(TCHAR** path, REFKNOWNFOLDERID ID) { return this->pGetKnownFolder(path, ID); }
+#endif //COMPILE_FOR_WIN_XP
 	 BOOL RemoveFilenameFromPath(_Inout_ LPTSTR path) { return this->pRemoveFilename(path); }
 	 BOOL RemoveFilenameFromPath(_In_ LPCTSTR path, _Outptr_ TCHAR** newPath_out) { return this->pRemoveFilename(path, newPath_out); }
 	 BOOL GetFilenameOutOfPath(LPCTSTR path, TCHAR** filename_out, BOOL hideFileExt) {return this->pGetFilenameOutOfPath(path, filename_out, hideFileExt);}
@@ -31,7 +33,9 @@ public:
 private:
 	BOOL pSaveBuffer(LPCTSTR, LPCTSTR, UINT);
 	BOOL pLoadBuffer(TCHAR**, LPCTSTR, UINT);
+#ifndef COMPILE_FOR_WIN_XP
 	BOOL pGetKnownFolder(TCHAR**, REFKNOWNFOLDERID);
+#endif //COMPILE_FOR_WIN_XP
 	BOOL pRemoveFilename(LPTSTR);
 	BOOL pRemoveFilename(LPCTSTR, TCHAR**);
 	BOOL pGetFilenameOutOfPath(LPCTSTR, TCHAR**, BOOL);

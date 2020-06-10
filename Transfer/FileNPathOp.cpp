@@ -223,7 +223,7 @@ BOOL BasicFileNPathOperations::pLoadBuffer(TCHAR** high_buffer, LPCTSTR path, UI
 	}
 	return result;
 }
-
+#ifndef COMPILE_FOR_WIN_XP
 BOOL BasicFileNPathOperations::pGetKnownFolder(TCHAR** Folderpath, REFKNOWNFOLDERID ID)
 {
 	PWSTR path = NULL;
@@ -248,6 +248,8 @@ BOOL BasicFileNPathOperations::pGetKnownFolder(TCHAR** Folderpath, REFKNOWNFOLDE
 	}
 	return SUCCEEDED(hr) ? TRUE : FALSE;
 }
+#endif // !COMPILE_FOR_WIN_XP
+
 
 BOOL BasicFileNPathOperations::pRemoveFilename(LPTSTR destination)
 {

@@ -228,6 +228,22 @@ HRESULT GenerateWorkingDir()
 {
     HRESULT hr;
 
+#ifdef COMPILE_FOR_WIN_XP
+    hr =
+        (CopyStringToPtr(L"C:\\Transfer 121\0", &pAppWorkingPath) == TRUE)
+        ? S_OK : E_FAIL;
+
+    if (SUCCEEDED(hr))
+    {
+        auto result =
+            CreateDirectory(pAppWorkingPath, nullptr);
+
+        if (!result)
+        {
+            hr = (GetLastError() == ERROR_ALREADY_EXISTS) ? S_OK : E_FAIL;
+        }
+    }
+#else
     auto bfpo = CreateBasicFPO();
 
     hr =
@@ -258,6 +274,8 @@ HRESULT GenerateWorkingDir()
             }
         }
     }
+#endif
+
     return hr;
 }
 
