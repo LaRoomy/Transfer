@@ -8,7 +8,8 @@ Unicode true
 ; ----------------------------------------------------------------;
 ; general_region--------------------------------------------------;
 !define VERSION "1.1.0"
-!define REDISTRIBUTABLE_FILENAME "redist_x86\vc_redist.x86.exe"    ;MARK x86/x64
+!define REDISTRIBUTABLE_FILEPATH "redist_x86\vc_redist.x86.exe"    ;MARK x86/x64
+!define REDISTRIBUTABLE_FILENAME "vc_redist.x86.exe"    ;MARK x86/x64
 
 Name "Transfer ${VERSION}"
 OutFile "installer_output\Transfer x86 ${VERSION}.exe"       ;MARK: x86/x64
@@ -97,10 +98,10 @@ Section "Installer Section"
 
     ;Create the temporary installer for the redistributable
     SetOutPath "$LOCALAPPDATA"
-    File "${REDISTRIBUTABLE_FILENAME}"
+    File "${REDISTRIBUTABLE_FILEPATH}"
     
     ; -> execute the external installer
-    ExecWait '"$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"  "/quiet" "/norestart"' ;"/install" "/silent" "/norestart" ;/install /passive /silent /norestart
+    ExecWait '"$LOCALAPPDATA\${REDISTRIBUTABLE_FILEPATH}"  "/install" "/norestart"' ;"/quiet" "/install" "/silent" "/norestart" ;/install /passive /silent /norestart
     ;IfErrors redistributable_error
 
     ;Create files and directories
@@ -147,16 +148,16 @@ Section "Installer Section"
 
     SetRegView 32
 
-    goto finalize
+    ;goto finalize
 
 ;redistributable_error:
     ;MessageBox MB_OK|MB_ICONSTOP "Error installing the required components for CnC Suite.$\nInstallation will be canceled."
     ;Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
     ;Quit
 
-finalize:
+;finalize:
     ;clean up
-    Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
+    Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILEPATH}"
 
 SectionEnd
 ; end INSTALLER SECTION ********************************************;
