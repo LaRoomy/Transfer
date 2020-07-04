@@ -5,7 +5,7 @@
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN             // Selten verwendete Komponenten aus Windows-Headern ausschließen
 
-#define		COMPILE_FOR_WIN_XP			// enable this when compiling in legacy mode for windows xp
+//#define		COMPILE_FOR_WIN_XP			// enable this when compiling in legacy mode for windows xp
 
 #pragma comment(lib, "Setupapi.lib")
 #pragma comment(lib,"Comdlg32.lib")
