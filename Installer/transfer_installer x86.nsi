@@ -8,8 +8,8 @@ Unicode true
 ; ----------------------------------------------------------------;
 ; general_region--------------------------------------------------;
 !define VERSION "1.1.0"
-!define REDISTRIBUTABLE_FILEPATH "redist_x86\vc_redist.x86.exe"    ;MARK x86/x64
-!define REDISTRIBUTABLE_FILENAME "vc_redist.x86.exe"    ;MARK x86/x64
+!define REDISTRIBUTABLE_FILEPATH "redist_x86\vc_redist.x86.exe"     ;MARK x86/x64
+!define REDISTRIBUTABLE_FILENAME "vc_redist.x86.exe"                ;MARK x86/x64
 
 Name "Transfer ${VERSION}"
 OutFile "installer_output\Transfer x86 ${VERSION}.exe"       ;MARK: x86/x64
@@ -94,14 +94,14 @@ Section "Installer Section"
     SetShellVarContext current
 
     ;SetOverwrite on (the default is 'on' so this is not necessary, but maybe set it to 'ifnewer' ?)
-    SetOverwrite on
+    SetOverwrite ifnewer
 
     ;Create the temporary installer for the redistributable
     SetOutPath "$LOCALAPPDATA"
     File "${REDISTRIBUTABLE_FILEPATH}"
     
     ; -> execute the external installer
-    ExecWait '"$LOCALAPPDATA\${REDISTRIBUTABLE_FILEPATH}"  "/install" "/norestart"' ;"/quiet" "/install" "/silent" "/norestart" ;/install /passive /silent /norestart
+    ExecWait '"$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"  "/quiet" "/norestart"' ;"/quiet" "/install" "/silent" "/norestart" ;/install /passive /silent /norestart
     ;IfErrors redistributable_error
 
     ;Create files and directories
@@ -123,8 +123,8 @@ Section "Installer Section"
     CreateShortCut "$SMPROGRAMS\Transfer.lnk" "$INSTDIR\Transfer.exe"
 
     ; the following section is disabled because in this installer we don't want to create a folder in the start-menu
-    ; old: CreateDirectory "$SMPROGRAMS\CnC Suite"
-    ; old: CreateShortCut "$SMPROGRAMS\CnC Suite\CnC Suite.lnk" "$INSTDIR\CnC Suite.exe"
+    ; old: CreateDirectory "$SMPROGRAMS\Transfer"
+    ; old: CreateShortCut "$SMPROGRAMS\Transfer\Transfer.lnk" "$INSTDIR\Transfer.exe"
 
     ;Create desktop shortcut
     CreateShortCut "$DESKTOP\Transfer.lnk" "$INSTDIR\Transfer.exe"
@@ -151,13 +151,13 @@ Section "Installer Section"
     ;goto finalize
 
 ;redistributable_error:
-    ;MessageBox MB_OK|MB_ICONSTOP "Error installing the required components for CnC Suite.$\nInstallation will be canceled."
+    ;MessageBox MB_OK|MB_ICONSTOP "Error installing the required components for Transfer.$\nInstallation will be canceled."
     ;Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
     ;Quit
 
 ;finalize:
     ;clean up
-    Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILEPATH}"
+    Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
 
 SectionEnd
 ; end INSTALLER SECTION ********************************************;
@@ -183,7 +183,7 @@ Section "un.Application" uninst_app
     ;RMDir "$SMPROGRAMS\Transfer"
 
     ;Delete desktop-shortcut
-    Delete "$DESKTOP\CnC Suite.lnk"
+    Delete "$DESKTOP\Transfer.lnk"
 
     ;Delete settings-folder and content
     Delete "C:\Transfer 121\comset.dat"
