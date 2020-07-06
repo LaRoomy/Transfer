@@ -290,7 +290,11 @@ LRESULT ConfigProperty::onMainWndCommand(HWND hWnd, WPARAM wParam, LPARAM lParam
 			this->onReceiveData();
 			break;
 		case IDM_ABOUT:
+#ifdef COMPILE_FOR_WIN_XP
+			DialogBox(this->hInstance, MAKEINTRESOURCE(IDD_XP_ABOUTBOX), hWnd, ConfigProperty::About);
+#else
 			DialogBox(this->hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, ConfigProperty::About);
+#endif
 			break;
 		case IDM_EXIT:
 			this->onClose();

@@ -7,12 +7,13 @@
 #define IDR_MAINFRAME			128
 #define IDD_TRANSFERXP_DIALOG	102
 #define IDD_ABOUTBOX			103
-#define IDM_ABOUT				104
-#define IDM_EXIT				105
-#define	IDM_OPEN				106
-#define	IDM_SAVEAS				107
-#define	IDM_SEND				108
-#define	IDM_RECEIVE				109
+#define	IDD_XP_ABOUTBOX			104
+#define IDM_ABOUT				105
+#define IDM_EXIT				106
+#define	IDM_OPEN				107
+#define	IDM_SAVEAS				108
+#define	IDM_SEND				109
+#define	IDM_RECEIVE				110
 
 
 
