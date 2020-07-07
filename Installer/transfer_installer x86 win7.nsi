@@ -35,7 +35,7 @@ VIAddVersionKey /LANG=0 "FileVersion" "1.1.0"
 ; ----------------------------------------------------------------;
 ; ----------------------------------------------------------------;
 ; interface_configuration_region ---------------------------------;
-BrandingText "Laroomy Designs"
+BrandingText "LaroomySoft"
 
 !define MUI_ICON "img\orange-install.ico"
 !define MUI_UNICON "img\orange-uninstall.ico"
@@ -63,8 +63,6 @@ BrandingText "Laroomy Designs"
 
 ; Uninstaller:
 !insertmacro MUI_UNPAGE_WELCOME
-;!insertmacro MUI_UNPAGE_CONFIRM
-;!insertmacro MUI_UNPAGE_COMPONENTS     ;let the user select if he wants to delete the created userfolder (appdata + projects)
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 ; end pages region -----------------------------------------------;

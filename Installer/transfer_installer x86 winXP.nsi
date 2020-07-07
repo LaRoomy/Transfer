@@ -35,7 +35,7 @@ VIAddVersionKey /LANG=0 "FileVersion" "1.1.0"
 ; ----------------------------------------------------------------;
 ; ----------------------------------------------------------------;
 ; interface_configuration_region ---------------------------------;
-BrandingText "Laroomy Designs"
+BrandingText "LaroomySoft"
 
 !define MUI_ICON "img\orange-install.ico"
 !define MUI_UNICON "img\orange-uninstall.ico"
