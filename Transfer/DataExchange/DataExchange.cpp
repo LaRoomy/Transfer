@@ -891,14 +891,14 @@ BOOL SerialComm::outputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 
 BOOL SerialComm::inputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 {
-	int counter = 0;
+	DWORD counter = 0;
 	bool array_start = false, holding = true;
 	char trans = 0;
 	char *multiByteBuffer = nullptr;
 	DWORD BytesRecieved, wait_result, Err;
 
 	multiByteBuffer =
-		new (std::nothrow) CHAR[this->inputBufferSize];
+		new (std::nothrow) CHAR[this->inputBufferSize + 1];
 
 	if (multiByteBuffer == nullptr)
 		return FALSE;
@@ -996,7 +996,7 @@ BOOL SerialComm::inputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 			else
 			{
 				// this iteration catches the scenario when the overlapped-event is triggered after the invokation of ReadFile, but before the invokation of WaitForSingleObject.
-				// if the characters wouldn't catched here, there were lost...
+				// if the characters wouldn't catched here, they were lost...
 				if ((trans != 0) && (!array_start))
 				{
 					array_start = true;
