@@ -820,7 +820,7 @@ BOOL SerialComm::outputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 	{
 		this->stepProgress();
 
-		// write char into output stream (WriteFile is used asynchronously, so it will return immediately
+		// write char into output stream (WriteFile is used asynchronously, so it will return immediately)
 		WriteFile(hFile, &multiByteBuffer[counter], 1, &bytesWritten, ovl);	// https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-writefile
 		counter++;
 
@@ -867,7 +867,9 @@ BOOL SerialComm::outputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 			}
 			if(!GetOverlappedResult(hFile, ovl, &bytesWritten, FALSE))	// https://docs.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-getoverlappedresult
 			{
-				Err = GetLastError(); 
+				Err =
+					GetLastError(); 
+
 				if((Err == ERROR_IO_PENDING)||(Err == ERROR_IO_INCOMPLETE))
 				{ 
 					// error
