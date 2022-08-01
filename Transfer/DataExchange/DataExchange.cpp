@@ -318,6 +318,13 @@ HRESULT SerialComm::getConfiguration(const TCHAR* path, PSERIAL_CONFIG config_ou
 		hr = (CopyStringToPtr(path, &this->configFileTargetDirectory) == TRUE)
 			? S_OK : E_FAIL;
 
+		if (FAILED(hr) && (this->configFileTargetDirectory != nullptr)) {
+			iString tst(this->configFileTargetDirectory);
+			if (tst.Equals(path)) {
+				hr = S_OK;
+			}
+		}
+
 		if (SUCCEEDED(hr))
 		{
 			hr =
@@ -468,7 +475,7 @@ void SerialComm::FromString(const wchar_t* stringRepresentation)
 }
 
 
-HRESULT SerialComm::serialInit( LPDCB dcb, LPCOMMTIMEOUTS timeouts, LPOVERLAPPED ovl )
+HRESULT SerialComm::serialInit(LPDCB dcb, LPCOMMTIMEOUTS timeouts, LPOVERLAPPED ovl)
 {
 	// general:
 	dcb->BaudRate = _baud[ this->Configuration->baud_index ];
@@ -600,7 +607,7 @@ BOOL SerialComm::startTransmissionThread(int Mode)
 
 	tinfo->MODE = Mode;
 	tinfo->additional = 0;
-	tinfo->serialCom = reinterpret_cast<LONG_PTR>( this );
+	tinfo->serialCom = reinterpret_cast<LONG_PTR>(this);
 
 	hThread =
 		CreateThread(
@@ -752,10 +759,6 @@ DWORD WINAPI SerialComm::TransmissionProc( LPVOID lParam )
 											{
 												_this_->OnInterrupt(Mode);
 											}
-											//else if (_this_->threadInterruptCtrl == TRANSMISSION_COMPLETE)
-											//{
-											//	_this_->onFinishTransmission();
-											//}
 											else
 											{
 												_this_->FinishTransmission();

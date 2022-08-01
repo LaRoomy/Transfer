@@ -3,6 +3,7 @@ Unicode true
 !include "LogicLib.nsh"
 !include "MUI2.nsh"
 !include "FileFunc.nsh"
+!include "x64.nsh"
 ; end include_region----------------------------------------------;
 ; ----------------------------------------------------------------;
 ; ----------------------------------------------------------------;
@@ -13,8 +14,6 @@ Name "Transfer ${VERSION}"
 OutFile "installer_output\win10\Transfer x86 user ${VERSION}.exe"        ;MARK: x86/x86
 
 InstallDir "$LOCALAPPDATA\Transfer"                                      ;MARK: x86/x86 ($PROGRAMFILES64 for x86)
-
-
 
 VIProductVersion 1.3.8.0
 VIAddVersionKey /LANG=0 "ProductName" "Transfer Installer x86"
@@ -102,20 +101,20 @@ Section "Installer Section"
 
     ;    Program files
     File "resources\Transfer.VisualElementsManifest.xml"
-    File "bin\win10\Transfer.exe"                           ; MARK x86 only !!
+    File "buildOutput\x86\Transfer.exe"                           ; MARK x86 only !!
     
     ; NOTE: Write the dependency dll's direct in the installation directory
     ; ************************************************************************************** ;
 
     ;Visual Studio distributed dll's - Path: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.24.28127\x86
-    File "DLLs\Microsoft.VC142.CRT.x86\concrt140.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\msvcp140.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\msvcp140_1.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\msvcp140_2.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\msvcp140_codecvt_ids.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\vccorlib140.dll"
-    File "DLLs\Microsoft.VC142.CRT.x86\vcruntime140.dll"
-
+    File "DLLs\Microsoft.VC143.CRT.x86\concrt140.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\msvcp140.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\msvcp140_1.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\msvcp140_2.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\msvcp140_codecvt_ids.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\msvcp140_atomic_wait.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\vccorlib140.dll"
+    File "DLLs\Microsoft.VC143.CRT.x86\vcruntime140.dll"
 
     ;Other dependency files - not all are necessary but it's easier to copy the hole folder
     ;Path: C:\Program Files (x86)\Windows Kits\10\Redist\10.0.18362.0\ucrt\DLLs\...
@@ -124,6 +123,7 @@ Section "Installer Section"
     File "DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"
     File "DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"
     File "DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"
+    File "DLLs\x86\api-ms-win-core-fibers-l1-1-0.dll"
     File "DLLs\x86\api-ms-win-core-file-l1-1-0.dll"
     File "DLLs\x86\api-ms-win-core-file-l1-2-0.dll"
     File "DLLs\x86\api-ms-win-core-file-l2-1-0.dll"
@@ -162,7 +162,6 @@ Section "Installer Section"
     File "DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"
     File "DLLs\x86\ucrtbase.dll"
 
-
     ;Write the assets-folder
     SetOutPath "$INSTDIR\bin\assets"
     File "resources\logo_sq70.png"
@@ -185,17 +184,18 @@ Section "Installer Section"
     ;------------------------------------------------------------------------------------------->
     ${GetTime} "" "L" $day $month $year $weekday $hours $minute $seconds
 
-    ;Register Uninstaller:
+    ${If} ${RunningX64}
+       SetRegView 64
+    ${EndIf}
 
     ;Write registry (Only for current user (user-installation))
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "DisplayName" "Transfer"
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "DisplayIcon" "$INSTDIR\image\transfer_img_small.ico"   
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "UninstallString" "$INSTDIR\bin\Uninstall.exe"
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "DisplayVersion" "${VERSION}"
-    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "Publisher" "LaroomySoft"
-        ; TODO: update the internet address
-    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLInfoAbout" "https://www.laroomy.de"    
-    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLUpdateInfo" "https://www.laroomy.de"    
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "Publisher" "Hans Philipp Zimmermann"
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLInfoAbout" "https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html"    
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLUpdateInfo" "https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html"    
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "InstallLocation" "$INSTDIR"
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "InstallDate" "$hours:$minute - $day/$month/$year"
 
@@ -240,6 +240,9 @@ Section "un.Application" uninst_app
 
     ;Remove Registry Entries
     ;------------------------------------------------------------------------->
+    ${If} ${RunningX64}
+       SetRegView 64
+    ${EndIf}
 
     ;Delete uninstaller key
     DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer"
@@ -247,6 +250,5 @@ Section "un.Application" uninst_app
 
     SetRegView 32
 SectionEnd
-
 
 ; end UNINSTALLER SECTION *************************************************************************************;
