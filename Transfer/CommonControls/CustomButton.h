@@ -14,6 +14,8 @@
 
 #define		CUSTOMBUTTONCLASS_FROMID(hwnd,id)	(LRESULT)(SNDMSG(GetDlgItem(((HWND)hwnd),((int)id)),((UINT)WM_GETWNDINSTANCE), ((WPARAM)0), ((LPARAM)0)))
 
+#pragma warning(push)
+#pragma warning(disable: 26495)
 typedef struct _BUTTONPROPERTY
 {
 	POINT ptOffset;
@@ -69,6 +71,7 @@ typedef struct _BUTTONCONTROL
 	bool touchdownlock_active;
 
 }BUTTONCONTROL, *LPBUTTONCONTROL;
+#pragma warning(pop)
 
 __interface customButtonEventSink
 {

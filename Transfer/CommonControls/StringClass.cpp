@@ -590,24 +590,29 @@ iString iString::GetSegment(LPCHARSCOPE cs)
 		int i = 0;
 		int segLength = cs->endChar - cs->startChar;
 
-		TCHAR* segment = new TCHAR[(size_t)(sizeof(TCHAR)*(segLength + 1))];
-		if (segment != nullptr)
-		{
-			for (i = 0; i <= segLength; i++)
+		if (segLength > 0) {
+
+			auto aSize = sizeof(TCHAR) * (static_cast<size_t>(segLength) + 2);
+
+			TCHAR* segment = new TCHAR[aSize];
+			if (segment != nullptr)
 			{
-				segment[i] = this->content[cs->startChar + i];
+				for (i = 0; i <= segLength; i++)
+				{
+					segment[i] = this->content[cs->startChar + i];
+				}
+				segment[i] = L'\0';
+
+				iString Segment_(segment);
+
+				delete[] segment;
+
+				return Segment_;
 			}
-			segment[i] = L'\0';
-
-			iString Segment_(segment);
-
-			delete[] segment;
-
-			return Segment_;
-		}
-		else
-		{
-			return iString(L"error::iString::class::GetSegment::outOfMemory\0");
+			else
+			{
+				return iString(L"error::iString::class::GetSegment::outOfMemory\0");
+			}
 		}
 	}
 	return iString(L"error::iString::class::GetSegment::invalidScope\0");
@@ -731,7 +736,7 @@ void iString::insertCharAt(int index, TCHAR _Char)
 {
 	auto length = this->GetLength();
 
-	if ((index < length) && (index >= 0))
+	if ((index < length) && (index >= 0) && (length > 0))
 	{
 		if (this->content != nullptr)
 		{
@@ -739,7 +744,9 @@ void iString::insertCharAt(int index, TCHAR _Char)
 			
 			this->ClearContent();
 
-			this->content = new TCHAR[length + 2];
+			auto aSize = sizeof(TCHAR) * (static_cast<size_t>(length) + 2);
+
+			this->content = new TCHAR[aSize];
 			if (this->content != nullptr)
 			{
 				for (int i = 0; i < index; i++)

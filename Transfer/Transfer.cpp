@@ -31,40 +31,40 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
     msg.wParam = ERROR_APPINITALIZATION_FAILURE;
 
-    InitializeCriticalSectionAndSpinCount(&CriticalSection, 0x00000400);
-    SetUnhandledExceptionFilter(lpTopLevelExceptionFilter);
+    if (InitializeCriticalSectionAndSpinCount(&CriticalSection, 0x00000400)) {
+        SetUnhandledExceptionFilter(lpTopLevelExceptionFilter);
 
-    cProperty = new ConfigProperty();
-    if (cProperty != nullptr)
-    {
-        // Arbeitspfad erstellen
-        if (SUCCEEDED(GenerateWorkingDir()))
+        cProperty = new ConfigProperty();
+        if (cProperty != nullptr)
         {
-            // Globale Zeichenfolgen initialisieren
-            LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-            LoadStringW(hInstance, IDC_TRANSFERXP, szWindowClass, MAX_LOADSTRING);
-            mRegisterClass(hInstance);
-
-            // Anwendungsinitialisierung ausführen:
-            if (InitInstance(hInstance, nCmdShow, cProperty))
+            // Arbeitspfad erstellen
+            if (SUCCEEDED(GenerateWorkingDir()))
             {
-                HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TRANSFERXP));
+                // Globale Zeichenfolgen initialisieren
+                LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+                LoadStringW(hInstance, IDC_TRANSFERXP, szWindowClass, MAX_LOADSTRING);
+                mRegisterClass(hInstance);
 
-                // Hauptnachrichtenschleife:
-                while (GetMessage(&msg, nullptr, 0, 0))
+                // Anwendungsinitialisierung ausführen:
+                if (InitInstance(hInstance, nCmdShow, cProperty))
                 {
-                    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TRANSFERXP));
+
+                    // Hauptnachrichtenschleife:
+                    while (GetMessage(&msg, nullptr, 0, 0))
                     {
-                        TranslateMessage(&msg);
-                        DispatchMessage(&msg);
+                        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                        {
+                            TranslateMessage(&msg);
+                            DispatchMessage(&msg);
+                        }
                     }
                 }
             }
+            cProperty->Release();
         }
-        cProperty->Release();
+        DeleteCriticalSection(&CriticalSection);
     }
-    DeleteCriticalSection(&CriticalSection);
-
     return (int) msg.wParam;
 }
 
@@ -299,7 +299,7 @@ LONG WINAPI lpTopLevelExceptionFilter(_EXCEPTION_POINTERS* exceptionInfo)
             message += L"\nExceptionCode: ";
             message += iString::fromHex(exceptionInfo->ExceptionRecord->ExceptionCode);
             message += L"\nExceptionAddress:  ";
-            message += iString::fromHex(reinterpret_cast<DWORD>(exceptionInfo->ExceptionRecord->ExceptionAddress));
+            message += iString::fromHex(reinterpret_cast<uintX>(exceptionInfo->ExceptionRecord->ExceptionAddress));
 
             MessageBox(nullptr, message.GetData(), L"Unhandled Exception", MB_OK | MB_ICONERROR);
         }

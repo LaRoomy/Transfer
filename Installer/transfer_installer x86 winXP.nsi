@@ -100,7 +100,7 @@ Section "Installer Section"
     ;Create files and directories
     SetOutPath "$INSTDIR"
 
-    File "buildOutput\x86\Transfer.exe"                            ;MARK: x86/x64
+    File "buildOutput\out_x86\Transfer.exe"                            ;MARK: x86/x64
     ;File "Transfer.VisualElementsManifest.xml"
 
     SetOutPath "$INSTDIR\img"  ;create folder

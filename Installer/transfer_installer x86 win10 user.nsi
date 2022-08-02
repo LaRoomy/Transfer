@@ -101,7 +101,7 @@ Section "Installer Section"
 
     ;    Program files
     File "resources\Transfer.VisualElementsManifest.xml"
-    File "buildOutput\x86\Transfer.exe"                           ; MARK x86 only !!
+    File "buildOutput\out_x86\Transfer.exe"                           ; MARK x86 only !!
     
     ; NOTE: Write the dependency dll's direct in the installation directory
     ; ************************************************************************************** ;

@@ -731,11 +731,6 @@ void ConfigProperty::onSendData()
 {
 	if (this->currentTransmissionMode == NO_TRANSMSN)
 	{
-		iString path(
-			GetGlobalAppPath()
-		);
-		path.Append(L"\\comset.dat");
-
 		this->serialComm->SetTransmissionEventProtocolHandler(dynamic_cast<ITransmissionReportProtocol*>(this));
 
 		auto hr = this->serialComm->InitDataTransmission(MODE_SEND, this->currentLoadedFileBuffer.GetData());
@@ -831,7 +826,7 @@ void ConfigProperty::util_updateContentHolder()
 	auto len = GetWindowTextLength(this->editBox);
 	if (len > 0)
 	{
-		TCHAR* buffer = new TCHAR[len + 2];
+		TCHAR* buffer = new TCHAR[static_cast<size_t>(len) + 2];
 		if (buffer != nullptr)
 		{
 			if (GetWindowText(this->editBox, buffer, len + 1) != 0)

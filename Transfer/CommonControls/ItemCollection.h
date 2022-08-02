@@ -168,7 +168,8 @@ inline void itemCollection<T>::AddItem(const T& item)
 					holder[i] = this->_Items_[i];
 				}
 				delete[] this->_Items_;
-				this->_Items_ = new T[itemCount + 1];
+				auto aSize = itemCount + 1;
+				this->_Items_ = new T[aSize];
 				if (this->_Items_ != nullptr)
 				{
 					int i;
@@ -253,7 +254,9 @@ inline void itemCollection<T>::RemoveAt(int index)
 						this->Clear();
 						this->itemCount = cntHolder - 1;
 
-						this->_Items_ = new T[cntHolder - 1];
+						auto aSize = (cntHolder - 1);
+
+						this->_Items_ = new T[aSize];
 						if (this->_Items_ != nullptr)
 						{
 							int k = 0;

@@ -903,7 +903,7 @@ BOOL SerialComm::inputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 	DWORD BytesRecieved, wait_result, Err;
 
 	multiByteBuffer =
-		new (std::nothrow) CHAR[this->inputBufferSize + 1];
+		new (std::nothrow) CHAR[static_cast<size_t>(this->inputBufferSize) + 1];
 
 	if (multiByteBuffer == nullptr)
 		return FALSE;

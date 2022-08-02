@@ -144,7 +144,7 @@ Section "Installer Section"
     File "resources\winXP_sp2\dll\vccorlib140.dll"
     File "resources\winXP_sp2\dll\vcruntime140.dll"
 
-    File "buildOutput\x86\Transfer.exe"                            ;MARK: x86/x64
+    File "buildOutput\out_x86\Transfer.exe"                            ;MARK: x86/x64
 
     SetOutPath "$INSTDIR\img"  ;create folder
 
