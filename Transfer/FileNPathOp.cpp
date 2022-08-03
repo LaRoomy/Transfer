@@ -332,10 +332,10 @@ BOOL BasicFileNPathOperations::pGetFilenameOutOfPath(LPCTSTR path, TCHAR ** file
 				break;
 		}
 
-		size_t len = ((size_t)(((j - i) + 2)*sizeof(TCHAR)));
+		size_t len = ((size_t)(((j - i) + 2) * sizeof(TCHAR)));
 
 		TCHAR* buffer = new TCHAR[len];
-		result = (buffer != NULL) ? TRUE : FALSE;
+		result = (buffer != nullptr) ? TRUE : FALSE;
 		if (result)
 		{
 			SecureZeroMemory(buffer, len);
@@ -453,7 +453,10 @@ BOOL BasicFileNPathOperations::pIfFileExistsChangePath(TCHAR **path)
 					}
 					SafeDeleteArray(&cpPath);
 				}
+#pragma warning(push)
+#pragma warning(disable: 6001)
 				CloseHandle(hFile);
+#pragma warning(pop)
 			}
 			if (!result)
 				break;
@@ -677,7 +680,7 @@ BOOL BasicFileNPathOperations::pCheckForFileExist(LPCTSTR path)
 	BOOL result = FALSE;
 	DWORD path_len = _lengthOfString(path);
 
-	TCHAR *unicodePath = new TCHAR[path_len + 8];
+	TCHAR *unicodePath = new TCHAR[static_cast<size_t>(path_len) + 8];
 
 	result = (unicodePath != nullptr) ? TRUE : FALSE;
 	if (result)

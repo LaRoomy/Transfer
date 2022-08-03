@@ -78,6 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Users\hansz\source\repos\Transfer\Transfer\CommonControls;C:\Users\hans-\source\repos\Transfer\Transfer\CommonControls;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)Installer\buildOutput\out_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -85,6 +86,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\hans-\source\repos\Transfer\Transfer\CommonControls;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)Installer\buildOutput\out_x64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

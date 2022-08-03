@@ -509,12 +509,12 @@ void singleLineEdit::updateContentHolder()
 
 	if (len > 0)
 	{
-		TCHAR* text = new TCHAR[len + 1];
+		TCHAR* text = new TCHAR[static_cast<size_t>(len) + 1];
 		if (text != nullptr)
 		{
 			GetWindowText(this->edit, text, len + 1);
 			this->editContent.Replace(text);
-			delete text;
+			delete [] text;
 		}
 	}
 	else

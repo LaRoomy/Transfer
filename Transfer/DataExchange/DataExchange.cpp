@@ -318,6 +318,13 @@ HRESULT SerialComm::getConfiguration(const TCHAR* path, PSERIAL_CONFIG config_ou
 		hr = (CopyStringToPtr(path, &this->configFileTargetDirectory) == TRUE)
 			? S_OK : E_FAIL;
 
+		if (FAILED(hr) && (this->configFileTargetDirectory != nullptr)) {
+			iString tst(this->configFileTargetDirectory);
+			if (tst.Equals(path)) {
+				hr = S_OK;
+			}
+		}
+
 		if (SUCCEEDED(hr))
 		{
 			hr =
@@ -468,7 +475,7 @@ void SerialComm::FromString(const wchar_t* stringRepresentation)
 }
 
 
-HRESULT SerialComm::serialInit( LPDCB dcb, LPCOMMTIMEOUTS timeouts, LPOVERLAPPED ovl )
+HRESULT SerialComm::serialInit(LPDCB dcb, LPCOMMTIMEOUTS timeouts, LPOVERLAPPED ovl)
 {
 	// general:
 	dcb->BaudRate = _baud[ this->Configuration->baud_index ];
@@ -600,7 +607,7 @@ BOOL SerialComm::startTransmissionThread(int Mode)
 
 	tinfo->MODE = Mode;
 	tinfo->additional = 0;
-	tinfo->serialCom = reinterpret_cast<LONG_PTR>( this );
+	tinfo->serialCom = reinterpret_cast<LONG_PTR>(this);
 
 	hThread =
 		CreateThread(
@@ -752,10 +759,6 @@ DWORD WINAPI SerialComm::TransmissionProc( LPVOID lParam )
 											{
 												_this_->OnInterrupt(Mode);
 											}
-											//else if (_this_->threadInterruptCtrl == TRANSMISSION_COMPLETE)
-											//{
-											//	_this_->onFinishTransmission();
-											//}
 											else
 											{
 												_this_->FinishTransmission();
@@ -820,7 +823,7 @@ BOOL SerialComm::outputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 	{
 		this->stepProgress();
 
-		// write char into output stream (WriteFile is used asynchronously, so it will return immediately
+		// write char into output stream (WriteFile is used asynchronously, so it will return immediately)
 		WriteFile(hFile, &multiByteBuffer[counter], 1, &bytesWritten, ovl);	// https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-writefile
 		counter++;
 
@@ -867,7 +870,9 @@ BOOL SerialComm::outputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 			}
 			if(!GetOverlappedResult(hFile, ovl, &bytesWritten, FALSE))	// https://docs.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-getoverlappedresult
 			{
-				Err = GetLastError(); 
+				Err =
+					GetLastError(); 
+
 				if((Err == ERROR_IO_PENDING)||(Err == ERROR_IO_INCOMPLETE))
 				{ 
 					// error
@@ -898,7 +903,7 @@ BOOL SerialComm::inputProcess(HANDLE hFile, LPOVERLAPPED ovl)
 	DWORD BytesRecieved, wait_result, Err;
 
 	multiByteBuffer =
-		new (std::nothrow) CHAR[this->inputBufferSize + 1];
+		new (std::nothrow) CHAR[static_cast<size_t>(this->inputBufferSize) + 1];
 
 	if (multiByteBuffer == nullptr)
 		return FALSE;

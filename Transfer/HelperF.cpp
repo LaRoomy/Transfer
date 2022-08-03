@@ -1102,7 +1102,7 @@ BOOL GetRichEditSelectionContent(HWND edit, TCHAR ** text_out)
 							GETTEXTEX gtx;
 							gtx.codepage = 1200;
 							gtx.flags = GT_SELECTION;
-							gtx.cb = (sizeof(TCHAR) * (len + 1));
+							gtx.cb = (sizeof(TCHAR) * (static_cast<size_t>(len) + 1));
 							gtx.lpDefaultChar = NULL;
 							gtx.lpUsedDefChar = NULL;
 
@@ -1433,7 +1433,7 @@ BOOL _cutString(LPCTSTR _string, int indexLow, int indexHigh, TCHAR ** newbuffer
 				if (*newbuffer_out != nullptr)
 				{
 					int r = 0;
-					SecureZeroMemory(*newbuffer_out, sizeof(TCHAR)*(bufSize + 1));
+					SecureZeroMemory(*newbuffer_out, sizeof(TCHAR) * (static_cast<size_t>(bufSize) + 1));
 
 					__try // now you overact - this could not happen at all??
 					{
@@ -1528,7 +1528,7 @@ BOOL _getlineFromCharIndexOutOfText(LPCTSTR text, int charIndex, TCHAR ** line_o
 					*line_out = new TCHAR[bufSize + 1];
 					if (*line_out != nullptr)
 					{
-						SecureZeroMemory(*line_out, sizeof(TCHAR)*(bufSize + 1));
+						SecureZeroMemory(*line_out, sizeof(TCHAR) * (static_cast<size_t>(bufSize) + 1));
 
 						int saver = 0;
 

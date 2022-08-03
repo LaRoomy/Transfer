@@ -90,12 +90,12 @@ private:
 	HWND editBox;
 	HINSTANCE hInstance;
 	HFONT clientFont;
-	Textfield* infoTextField;
-	CustomButton* sendButton;
-	CustomButton* receiveButton;
+	Textfield* infoTextField = nullptr;
+	CustomButton* sendButton = nullptr;
+	CustomButton* receiveButton = nullptr;
 	iString currentLoadedFileBuffer;
 
-	SerialComm* serialComm;
+	SerialComm* serialComm = nullptr;
 
 	bool editChangeBlockerEnabled;
 	int currentTransmissionMode;

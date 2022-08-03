@@ -531,36 +531,38 @@ void ConfigProperty::onComboSelChange(comboBox* cBox, int selIndex)
 {
 	if (cBox != nullptr)
 	{
-		iString path(
-			GetGlobalAppPath()
-		);
-		path.Append(L"\\comset.dat");
+		if (this->serialComm != nullptr) {
 
-		SerialComm dTraf;
-		SERIAL_CONFIG config;
+			iString path(
+				GetGlobalAppPath()
+			);
+			path.Append(L"\\comset.dat");
 
-		dTraf.getConfiguration(path.GetData(), &config);
+			SERIAL_CONFIG config;
 
-		auto ctrlID = cBox->getCtrlId();
+			this->serialComm->getConfiguration(path.GetData(), &config);
 
-		switch (ctrlID)
-		{
-		case CTRLID_BAUDRATECOMBO:
-			config.baud_index = selIndex;
-			break;
-		case CTRLID_PARITYCOMBO:
-			config.parity_index = selIndex;
-			break;
-		case CTRLID_STOPBITSCOMBO:
-			config.stopbit_index = selIndex;
-			break;
-		case CTRLID_DATABITSCOMBO:
-			config.databit_index = selIndex;
-			break;
-		default:
-			break;
+			auto ctrlID = cBox->getCtrlId();
+
+			switch (ctrlID)
+			{
+			case CTRLID_BAUDRATECOMBO:
+				config.baud_index = selIndex;
+				break;
+			case CTRLID_PARITYCOMBO:
+				config.parity_index = selIndex;
+				break;
+			case CTRLID_STOPBITSCOMBO:
+				config.stopbit_index = selIndex;
+				break;
+			case CTRLID_DATABITSCOMBO:
+				config.databit_index = selIndex;
+				break;
+			default:
+				break;
+			}
+			this->serialComm->setConfiguration(path.GetData(), &config);
 		}
-		dTraf.setConfiguration(path.GetData(), &config);
 	}
 }
 
@@ -570,26 +572,28 @@ void ConfigProperty::onEditContentChanged(singleLineEdit* edit, CTRLID ctrlID)
 	{
 		if (!edit->isContentInvalid())
 		{
-			auto content =
-				edit->getContent();
+			if (this->serialComm != nullptr) {
 
-			if (content.GetLength() > 0)
-			{
-				iString path(
-					GetGlobalAppPath()
-				);
-				path.Append(L"\\comset.dat");
+				auto content =
+					edit->getContent();
 
-				SerialComm dTraf;
-				SERIAL_CONFIG config;
+				if (content.GetLength() > 0)
+				{
+					iString path(
+						GetGlobalAppPath()
+					);
+					path.Append(L"\\comset.dat");
 
-				dTraf.getConfiguration(path.GetData(), &config);
+					SERIAL_CONFIG config;
 
-				auto comPort = _wtoi(content.GetData());
+					this->serialComm->getConfiguration(path.GetData(), &config);
 
-				config.Active_port = comPort;
+					auto comPort = _wtoi(content.GetData());
 
-				dTraf.setConfiguration(path.GetData(), &config);
+					config.Active_port = comPort;
+
+					this->serialComm->setConfiguration(path.GetData(), &config);
+				}
 			}
 		}
 	}
@@ -727,11 +731,6 @@ void ConfigProperty::onSendData()
 {
 	if (this->currentTransmissionMode == NO_TRANSMSN)
 	{
-		iString path(
-			GetGlobalAppPath()
-		);
-		path.Append(L"\\comset.dat");
-
 		this->serialComm->SetTransmissionEventProtocolHandler(dynamic_cast<ITransmissionReportProtocol*>(this));
 
 		auto hr = this->serialComm->InitDataTransmission(MODE_SEND, this->currentLoadedFileBuffer.GetData());
@@ -827,7 +826,7 @@ void ConfigProperty::util_updateContentHolder()
 	auto len = GetWindowTextLength(this->editBox);
 	if (len > 0)
 	{
-		TCHAR* buffer = new TCHAR[len + 2];
+		TCHAR* buffer = new TCHAR[static_cast<size_t>(len) + 2];
 		if (buffer != nullptr)
 		{
 			if (GetWindowText(this->editBox, buffer, len + 1) != 0)

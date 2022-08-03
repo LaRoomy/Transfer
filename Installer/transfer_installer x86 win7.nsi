@@ -81,11 +81,6 @@ BrandingText "LaroomySoft"
 
 ; end variable region --------------------------------------------;
 
-;TODO's:
-; - Write Registry, don't forget to write the version to hklm to check it in installer
-;
-; - Check for previous version and remove it or tell the user that it is already installed
-
 
 ; INSTALLER SECTION **********************************************;
 Section "Installer Section"
@@ -102,13 +97,11 @@ Section "Installer Section"
     
     ; -> execute the external installer
     ExecWait '"$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"  "/quiet" "/norestart"' ;"/quiet" "/install" "/silent" "/norestart" ;/install /passive /silent /norestart
-    ;IfErrors redistributable_error
 
     ;Create files and directories
     SetOutPath "$INSTDIR"
 
-    File "bin\win7\Transfer.exe"                            ;MARK: x86/x64
-    ;File "Transfer.VisualElementsManifest.xml"
+    File "buildOutput\out_x86\Transfer.exe"                            ;MARK: x86/x64
 
     SetOutPath "$INSTDIR\img"  ;create folder
 
@@ -122,16 +115,11 @@ Section "Installer Section"
     ;Create startmenu-entry
     CreateShortCut "$SMPROGRAMS\Transfer.lnk" "$INSTDIR\Transfer.exe"
 
-    ; the following section is disabled because in this installer we don't want to create a folder in the start-menu
-    ; old: CreateDirectory "$SMPROGRAMS\Transfer"
-    ; old: CreateShortCut "$SMPROGRAMS\Transfer\Transfer.lnk" "$INSTDIR\Transfer.exe"
-
     ;Create desktop shortcut
     CreateShortCut "$DESKTOP\Transfer.lnk" "$INSTDIR\Transfer.exe"
 
     ;Write registry
     ;------------------------------------------------------------------------------------------->
-    ;Register Uninstaller:
     ${If} ${RunningX64}
        SetRegView 64
     ${EndIf}
@@ -140,23 +128,15 @@ Section "Installer Section"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "DisplayIcon" "$INSTDIR\img\transfer_img_small.ico"   
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "UninstallString" "$INSTDIR\Uninstall.exe"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "DisplayVersion" "${VERSION}"
-    WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "Publisher" "LaroomySoft"
-    WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLInfoAbout" "http://www.laroomy.de"    
+    WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "Publisher" "Hans Philipp Zimmermann"
+    WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Transfer" "URLInfoAbout" "https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html"    
     
     ;Set Application Registry entry
     WriteRegStr HKLM "SOFTWARE\Transfer\CurrentVersion" "" "1.1.0"
 
     SetRegView 32
 
-    ;goto finalize
-
-;redistributable_error:
-    ;MessageBox MB_OK|MB_ICONSTOP "Error installing the required components for Transfer.$\nInstallation will be canceled."
-    ;Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
-    ;Quit
-
-;finalize:
-    ;clean up
+    ;Clean up
     Delete "$LOCALAPPDATA\${REDISTRIBUTABLE_FILENAME}"
 
 SectionEnd
@@ -173,14 +153,11 @@ Section "un.Application" uninst_app
 
     Delete "$INSTDIR\Uninstall.exe"
     Delete "$INSTDIR\Transfer.exe"
-    ;Delete "$INSTDIR\Transfer.VisualElementsManifest.xml"
 
     RMDir "$INSTDIR"
 
     ;Delete startmenu-entries
     Delete "$SMPROGRAMS\Transfer.lnk"
-    ;Delete "$SMPROGRAMS\Transfer\Transfer.lnk"
-    ;RMDir "$SMPROGRAMS\Transfer"
 
     ;Delete desktop-shortcut
     Delete "$DESKTOP\Transfer.lnk"
