@@ -73,20 +73,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\hans-\source\repos\Transfer_xp\Transfer_xp\CommonControls;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Transfer\CommonControls;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\hansz\source\repos\Transfer\Transfer\CommonControls;C:\Users\hans-\source\repos\Transfer\Transfer\CommonControls;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Transfer\CommonControls;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Installer\buildOutput\out_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\User\source\repos\Transfer\Transfer\CommonControls;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Transfer\CommonControls;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\hans-\source\repos\Transfer\Transfer\CommonControls;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Transfer\CommonControls;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Installer\buildOutput\out_x64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
