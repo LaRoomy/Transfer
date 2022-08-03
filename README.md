@@ -5,7 +5,7 @@ Transfer is a simple Win32 Desktop Application to enable serial data transmissio
 
 ## How to build the executable:
 
-- Download and Install [Visual Studio 2022 (Community)](https://visualstudio.microsoft.com/de/downloads/)
+- Download and Install [Visual Studio 2022 (Community)](https://visualstudio.microsoft.com/de/downloads/) and make sure to install the C++ Desktop Development Package
 - Open Visual Studio
 - Click on "Clone Repository" on the right side
 - Copy the Repository path from GitHub.com and paste it
