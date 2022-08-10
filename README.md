@@ -14,14 +14,15 @@ Transfer is a simple Win32 Desktop Application to enable serial data transmissio
 - Select the desired build configuration (Release/Debug and x86/x64) in the toolbar
 - Click on the Build-Button.
 
-NOTE: When the executable is built to run on Windows XP, the **COMPILE_FOR_WIN_XP** preprocessor definition in the header-file *framework.h* must be uncommented:
-´´´C++
+NOTE:
+When the executable is built to run on Windows XP, the **COMPILE_FOR_WIN_XP** preprocessor definition in the header-file *framework.h* must be uncommented:
+```C++
 #define		COMPILE_FOR_WIN_XP			// enable this when compiling in legacy mode for windows xp
-´´´
-Otherwise when built for Windows 7 or higher this definition **must not** be set(commented).
-´´´C++
+```
+Otherwise when built for Windows 7 or higher this definition **must not** be set:
+```C++
 //#define		COMPILE_FOR_WIN_XP			// enable this when compiling in legacy mode for windows xp
-´´´
+```
 When built in Release mode, the output location of the executables is set to the appropriate *($ProjectDirectory)/Installer/buildOutput* Directory (depending on the target platform), this location is the source location for the Installer generation.
 
 ## How to build the installer:
@@ -32,4 +33,11 @@ When built in Release mode, the output location of the executables is set to the
 - Open the appropriate script for the desired target platform x86/x64, the installer will be built automatically and the results are displayed in the textbox
 - The default output location of the generated installer is *($ProjectDirectory)/Installer/installer_output/*
 - Optional: To edit the scripts I would recommend to download [Visual Studio Code](https://code.visualstudio.com/) and when done, install the NSIS language support extension from the Extension Marketplace inside VS Code.
+
+Note:
+The installer is user-based. No administrator privileges are required.
+
+## How to user the application
+
+Instructions how to use this app are available [here](https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html).
 
