@@ -1,5 +1,7 @@
 # Transfer
-Transfer is a simple Win32 Desktop Application to enable serial data transmission with older EPL2 based machines on newer Windows systems. Supported OS-Versions are XP/7/10/11. This project includes the C++ source for the executable and NSI Scripts to generate an Installer with NSIS.
+Transfer is a simple Win32 Desktop Application to enable serial data transmission with older EPL2 based machines on newer Windows systems. Supported OS-Versions are XP/7/10/11. This project includes the C++ source for the executable and NSI scripts to generate an installer with NSIS.
+
+ToDo: Add link to website where to download the installers!
 
 ![Transfer App User Interface](Resources/Screenshot_b.png)
 
@@ -14,7 +16,7 @@ Transfer is a simple Win32 Desktop Application to enable serial data transmissio
 - Select the desired build configuration (Release/Debug and x86/x64) in the toolbar
 - Click on the Build-Button.
 
-NOTE:
+#### NOTE:
 When the executable is built to run on Windows XP, the **COMPILE_FOR_WIN_XP** preprocessor definition in the header-file *framework.h* must be uncommented:
 ```C++
 #define COMPILE_FOR_WIN_XP  // enable this when compiling in legacy mode for windows xp
@@ -23,7 +25,7 @@ Otherwise when built for Windows 7 or higher this definition **must not** be set
 ```C++
 //#define COMPILE_FOR_WIN_XP  // enable this when compiling in legacy mode for windows xp
 ```
-When built in Release mode, the output location of the executables is set to the appropriate *($ProjectDirectory)/Installer/buildOutput* Directory (depending on the target platform), this location is the source location for the Installer generation.
+When built in Release mode, the output location of the executables is set to the appropriate *($ProjectDirectory)/Installer/buildOutput* Directory (depending on the target platform), this folder is the source location for the installer generation.
 
 ## How to build the installer:
 
@@ -34,10 +36,11 @@ When built in Release mode, the output location of the executables is set to the
 - The default output location of the generated installer is *($ProjectDirectory)/Installer/installer_output/*
 - Optional: To edit the scripts I would recommend to download [Visual Studio Code](https://code.visualstudio.com/) and when done, install the NSIS language support extension from the Extension Marketplace inside VS Code.
 
-Note:
+#### NOTE:
 The installer is user-based. No administrator privileges are required.
 
 ## How to use the application
 
 Instructions how to use this app are available [here](https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html).
 
+![GitHub](https://img.shields.io/github/license/LaRoomy/Transfer)
