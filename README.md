@@ -25,7 +25,8 @@ Otherwise when built for Windows 7 or higher this definition **must not** be set
 ```C++
 //#define COMPILE_FOR_WIN_XP  // enable this when compiling in legacy mode for windows xp
 ```
-When built in Release mode, the output location of the executables is set to the appropriate *($ProjectDirectory)/Installer/buildOutput* Directory (depending on the target platform), this folder is the source location for the installer generation.
+When built in Release mode, the output location of the executables is set to the appropriate directory: *($ProjectDirectory)/Installer/buildOutput* (depending on the target platform).
+This folder is also the source location for the installer generation. The output directory can be changed in the Visual Studio project properties.
 
 ## How to build the installer:
 
