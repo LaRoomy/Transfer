@@ -1,7 +1,7 @@
 # Transfer
 Transfer is a simple Win32 Desktop Application to enable serial data transmission with older EPL2 based machines on newer Windows systems. Supported OS-Versions are XP/7/10/11. This project includes the C++ source for the executable and NSI scripts to generate an installer with NSIS.
 
-ToDo: Add link to website where to download the installers!
+[Click here to download the installer for the application.](https://epl2-datatransmission.blogspot.com/2020/08/epl2-datenubertragung.html#more)
 
 ![Transfer App User Interface](Resources/Screenshot_b.png)
 
